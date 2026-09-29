@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FaceAuth — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+ 
+<body>
+  <div class="page">
+ 
+    <div class="card" id="loginCard">
+ 
+      <!-- Header -->
+      <div class="card-header">
+        <div class="logo">FA</div>
+        <h1 class="title">Log in with just your face</h1>
+        <p class="subtitle">Enter your username, then look at the camera.</p>
+      </div>
+ 
+      <!-- Username -->
+      <div class="field">
+        <label class="field-label" for="username">Username</label>
+        <input
+          class="field-input"
+          id="username"
+          type="text"
+          placeholder="your username"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+ 
+      <!-- Webcam -->
+      <div class="cam-wrap">
+ 
+        <div class="cam-prompt" id="camPrompt">
+          <div class="cam-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+            </svg>
+          </div>
+          <span>Click to start camera</span>
+        </div>
+ 
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+ 
+        <div class="cam-badge" id="camBadge">Camera off</div>
+ 
+      </div>
+ 
+      <button class="btn-primary" id="loginBtn" disabled>
+        <span id="loginBtnText">Scan face to log in</span>
+      </button>
+ 
+      <div class="message" id="message"></div>
+ 
+      <div class="confidence-wrap" id="confidenceWrap">
+        <div class="confidence-header">
+          <span>Match confidence</span>
+          <span id="confidenceVal">0%</span>
+        </div>
+        <div class="confidence-track">
+          <div class="confidence-fill" id="confidenceFill"></div>
+        </div>
+      </div>
+ 
+      <div class="card-footer">
+        <a href="recovery.html">Can't log in?</a>
+        <span class="divider">·</span>
+        <a href="register.html">Create account</a>
+      </div>
+ 
+    </div>
+ 
+    <div class="success-card" id="successCard">
+      <div class="success-check">✓</div>
+      <h2>Welcome back</h2>
+      <p id="successUser"></p>
+      <span class="success-redirect">Redirecting...</span>
+    </div>
+ 
+  </div>
+ 
+  <script src="login.js"></script>
+</body>
+</html>

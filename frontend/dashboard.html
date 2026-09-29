@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FaceAuth — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+
+<body>
+
+
+  <div class="page" id="page">
+
+    <nav class="navbar">
+      <div class="nav-logo">FA</div>
+      <div class="nav-right">
+        <span class="nav-username" id="navUsername"></span>
+        <button class="btn-logout" id="logoutBtn">Log out</button>
+      </div>
+    </nav>
+
+    <main class="main">
+
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <h1 class="welcome-title" id="welcomeTitle">Welcome back</h1>
+          <p class="welcome-sub">You are authenticated via facial recognition.</p>
+        </div>
+        <div class="auth-badge">
+          <span class="badge-dot"></span>
+          Authenticated
+        </div>
+      </div>
+
+      <div class="stats-row">
+
+        <div class="stat-card">
+          <div class="stat-label">Logged in as</div>
+          <div class="stat-value" id="statUsername">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Session expires</div>
+          <div class="stat-value" id="statExpiry">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Auth method</div>
+          <div class="stat-value">Face / ArcFace</div>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Session token</h2>
+          <button class="btn-copy" id="copyBtn">Copy</button>
+        </div>
+        <div class="token-wrap">
+          <code class="token-text" id="tokenText"></code>
+        </div>
+        <p class="card-hint">
+          This JWT is stored in sessionStorage and expires in 1 hour.
+          It would be sent as a header on every API request in a full application.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">What's next</h2>
+        </div>
+        <div class="next-list">
+
+          <div class="next-item done">
+            <div class="next-dot done"></div>
+            <div class="next-info">
+              <span class="next-title">Backend pipeline</span>
+              <span class="next-desc">ArcFace embeddings, cosine distance, PostgreSQL</span>
+            </div>
+          </div>
+
+          <div class="next-item done">
+            <div class="next-dot done"></div>
+            <div class="next-info">
+              <span class="next-title">Registration flow</span>
+              <span class="next-desc">5-direction photo capture with auto/manual capture</span>
+            </div>
+          </div>
+
+          <div class="next-item done">
+            <div class="next-dot done"></div>
+            <div class="next-info">
+              <span class="next-title">Login flow</span>
+              <span class="next-desc">Face scan → JWT issuance → session management</span>
+            </div>
+          </div>
+
+          <div class="next-item">
+            <div class="next-dot"></div>
+            <div class="next-info">
+              <span class="next-title">Account recovery</span>
+              <span class="next-desc">Email token → re-register face embeddings</span>
+            </div>
+          </div>
+
+          <div class="next-item">
+            <div class="next-dot"></div>
+            <div class="next-info">
+              <span class="next-title">Liveness detection</span>
+              <span class="next-desc">Prevent photo spoofing attacks</span>
+            </div>
+          </div>
+
+          <div class="next-item">
+            <div class="next-dot"></div>
+            <div class="next-info">
+              <span class="next-title">HTTPS + httpOnly cookies</span>
+              <span class="next-desc">Production-ready token storage</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

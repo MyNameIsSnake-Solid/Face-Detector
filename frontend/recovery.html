@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FaceAuth — Account Recovery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="recovery.css" />
+</head>
+ 
+<body>
+  <div class="page">
+ 
+    <div class="card" id="stepRequest">
+ 
+      <div class="card-header">
+        <div class="logo">FA</div>
+        <h1 class="title">Recover your account</h1>
+        <p class="subtitle">Enter your username and we'll send a recovery link to your email.</p>
+      </div>
+ 
+      <div class="field">
+        <label class="field-label" for="username">Username</label>
+        <input class="field-input" id="username" type="text"
+          placeholder="your username" autocomplete="off" spellcheck="false" />
+      </div>
+ 
+      <div class="message" id="requestMessage"></div>
+ 
+      <button class="btn-primary" id="requestBtn">
+        <span>Send recovery link</span>
+      </button>
+ 
+      <div class="card-footer">
+        <a href="login.html">Back to login</a>
+      </div>
+ 
+    </div>
+ 
+    <div class="card hidden" id="stepToken">
+ 
+      <div class="card-header">
+        <div class="step-back" id="backToRequest">← Back</div>
+        <h1 class="title">Enter recovery code</h1>
+        <p class="subtitle">
+          Check your email for the recovery link and paste the code below.
+        </p>
+      </div>
+ 
+      <div class="dev-note" id="devNote"></div>
+ 
+      <div class="field">
+        <label class="field-label" for="tokenInput">Recovery code</label>
+        <input class="field-input mono" id="tokenInput" type="text"
+          placeholder="paste your recovery token" autocomplete="off" spellcheck="false" />
+      </div>
+ 
+      <div class="message" id="tokenMessage"></div>
+ 
+      <button class="btn-primary" id="tokenBtn">
+        <span>Continue</span>
+      </button>
+ 
+    </div>
+ 
+    <div class="card hidden" id="stepFace">
+ 
+      <div class="card-header">
+        <h1 class="title">Re-capture your face</h1>
+        <p class="subtitle">
+          Complete all 5 directions to replace your existing face data.
+        </p>
+      </div>
+ 
+      <div class="directions-grid">
+ 
+        <div class="direction-item" id="dir-center" data-direction="center">
+          <div class="dir-indicator"></div>
+          <div class="dir-info">
+            <span class="dir-name">Center</span>
+            <span class="dir-hint">Look straight at the camera</span>
+          </div>
+          <div class="dir-status">
+            <span class="dir-badge pending">Pending</span>
+          </div>
+        </div>
+ 
+        <div class="direction-item" id="dir-left" data-direction="left">
+          <div class="dir-indicator"></div>
+          <div class="dir-info">
+            <span class="dir-name">Left</span>
+            <span class="dir-hint">Turn your head slightly left</span>
+          </div>
+          <div class="dir-status">
+            <span class="dir-badge pending">Pending</span>
+          </div>
+        </div>
+ 
+        <div class="direction-item" id="dir-right" data-direction="right">
+          <div class="dir-indicator"></div>
+          <div class="dir-info">
+            <span class="dir-name">Right</span>
+            <span class="dir-hint">Turn your head slightly right</span>
+          </div>
+          <div class="dir-status">
+            <span class="dir-badge pending">Pending</span>
+          </div>
+        </div>
+ 
+        <div class="direction-item" id="dir-up" data-direction="up">
+          <div class="dir-indicator"></div>
+          <div class="dir-info">
+            <span class="dir-name">Up</span>
+            <span class="dir-hint">Tilt your head slightly up</span>
+          </div>
+          <div class="dir-status">
+            <span class="dir-badge pending">Pending</span>
+          </div>
+        </div>
+ 
+        <div class="direction-item" id="dir-down" data-direction="down">
+          <div class="dir-indicator"></div>
+          <div class="dir-info">
+            <span class="dir-name">Down</span>
+            <span class="dir-hint">Tilt your head slightly down</span>
+          </div>
+          <div class="dir-status">
+            <span class="dir-badge pending">Pending</span>
+          </div>
+        </div>
+ 
+      </div>
+ 
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progressText">0 of 5 completed</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+ 
+      <div class="cam-wrap">
+ 
+        <div class="cam-prompt" id="camPrompt">
+          <div class="cam-icon">⬤</div>
+          <span>Click to start camera</span>
+        </div>
+ 
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+ 
+        <div class="countdown-overlay hidden" id="countdownOverlay">
+          <div class="countdown-num" id="countdownNum">3</div>
+        </div>
+ 
+        <div class="cam-badge" id="camBadge">Camera off</div>
+ 
+      </div>
+ 
+      <div class="active-direction" id="activeDirectionWrap">
+        <span class="active-dir-label">Selected direction:</span>
+        <span class="active-dir-name" id="activeDirectionName">None selected</span>
+      </div>
+ 
+      <div class="capture-controls">
+ 
+        <div class="toggle-wrap">
+          <label class="toggle-label" for="autoToggle">
+            <span>Auto-capture</span>
+            <span class="toggle-hint" id="toggleHint">Off</span>
+          </label>
+          <div class="toggle" id="autoToggle">
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+ 
+        <button class="btn-primary" id="captureBtn" disabled>
+          <span id="captureBtnText">Capture photo</span>
+        </button>
+ 
+      </div>
+ 
+      <div class="message" id="faceMessage"></div>
+ 
+    </div>
+ 
+    <div class="success-card hidden" id="stepSuccess">
+      <div class="success-check">✓</div>
+      <h2>Face data updated</h2>
+      <p>You can now log in with your new face capture.</p>
+      <span class="success-redirect">Redirecting to login...</span>
+    </div>
+ 
+  </div>
+ 
+  <script src="recovery.js"></script>
+</body>
+</html>
